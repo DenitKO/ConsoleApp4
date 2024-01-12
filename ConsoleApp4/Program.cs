@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Diagnostics;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ConsoleApp4
 {
@@ -9,10 +11,17 @@ namespace ConsoleApp4
         {
             // SecondSeminarDZ();
             var array = new int[] {1, 3, 5, 10, 60, 100, 1000, 2000};
-            Console.WriteLine(binarySearch(5, array));
+            // Console.WriteLine(binarySearch(5, array));
+            // Console.WriteLine(factorial(20));
 
 
+            // var text = MeasurePerformance(10, () => factorial(20));
+            var text = MeasurePerformance(10, () => binarySearch(5, array));
+            // var text = MeasurePerformance(10, () => SecondSeminarDZ());
+            Console.WriteLine($"finish ms: {text}");
         }
+
+
 
         public static void SecondSeminarDZ()
         {
@@ -62,18 +71,37 @@ namespace ConsoleApp4
             return -1;
         }
 
-        private static int factorial(int value)
+        private static long MeasurePerformance(int iterations, Action action)
         {
-            int result = 0;
+            // First action always too large, I woder why?
+            action();
+            long result = 0;
+            var stopwatch = new Stopwatch();
+            for (var i = 0; i < iterations; i++)
+            {
+                stopwatch.Start();
+                action();
+                stopwatch.Stop();
+                result += stopwatch.ElapsedTicks;
+                Console.WriteLine($"Iteration {i+1}. Ticks: {stopwatch.ElapsedTicks}. ms: {stopwatch.ElapsedMilliseconds}");
+                stopwatch.Reset();
+            }
+            Console.WriteLine($"Iterations: {iterations}, TotalTiks: {result}");
+            Console.WriteLine($"AVG Ticks: {result/iterations}");
+            result /= iterations;
+            return result;
+            
+        }
+
+
+        private static long factorial(long value)
+        {
             if ((value == 0) || (value == 1))
             {
                 return 1;
             }
-            if (value > 1)
-            {
-                result = value * factorial(value - 1);
-                return result;
-            }
+
+            return value * factorial(value - 1);
         }
     }
 }
