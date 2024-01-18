@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Diagnostics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Reflection;
+using System.Text;
 
 namespace ConsoleApp4
 {
@@ -9,16 +9,83 @@ namespace ConsoleApp4
     {
         static void Main(string[] args)
         {
+            FromMinSortDictionary();
+
+            #region Start TestClass1Seminar1_1
+            //TestClassSeminar1_1 testClass = new("Денис");
+            //TestClassSeminar1_1 testClass2 = new("Оля");
+            //TestClassSeminar1_1 testClass3 = new("Абырвалг");
+            //Console.WriteLine(testClass.GetReverseName());
+            //Console.WriteLine(testClass2.GetReverseName());
+            //Console.WriteLine(testClass3.GetReverseName());
+            //Console.WriteLine(testClass3.index);
+            //testClass.Print("It's work!");
+            //Console.WriteLine();
+            //var text = MeasurePerformance(10, () => testClass.GetReverseName());
+            #endregion
+
+            #region String and StringBuilder Perfomance
+            // var text = MeasurePerformance(1, () => LongConcatination(100));
+            // Console.WriteLine();
+            // var text1 = MeasurePerformance(1, () => ShortConcatination(10000));
+            #endregion
+
             // SecondSeminarDZ();
-            var array = new int[] {1, 3, 5, 10, 60, 100, 1000, 2000};
-            // Console.WriteLine(binarySearch(5, array));
-            // Console.WriteLine(factorial(20));
-
-
-            // var text = MeasurePerformance(10, () => factorial(20));
-            var text = MeasurePerformance(10, () => binarySearch(5, array));
             // var text = MeasurePerformance(10, () => SecondSeminarDZ());
-            Console.WriteLine($"finish ms: {text}");
+
+            // Console.WriteLine(binarySearch(5, array));
+
+            // Console.WriteLine(factorial(20));
+            //var text = MeasurePerformance(10, () => factorial(20));
+
+            //var array = new int[] { 1, 3, 5, 10, 60, 100, 1000, 2000 };
+            //var text = MeasurePerformance(10, () => binarySearch(5, array));
+        }
+
+        public static void FromMinSortDictionary()
+        {
+            int[] nums = new int[10];
+            for (int i = 0; i < nums.Length; i++)
+            {
+                nums[i] = new Random().Next(6);
+                Console.Write($"{nums[i]}");
+            }
+            Console.WriteLine();
+
+            Dictionary<int, int> map = new Dictionary<int, int>();
+
+            foreach (int i in nums)
+            {
+                if (!map.ContainsKey(i)) map[i] = 0;
+                map[i]++;
+            }
+
+            Dictionary<int, int> ordered = map.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+
+            foreach (var item in ordered.Keys)
+            {
+                Console.WriteLine($"{item}: {map[item]}");
+            }
+        }
+
+        public static void LongConcatination(int count)
+        {
+            string str = string.Empty;
+            for (int i = 0; i < count; i++)
+            {
+                str = str + '+';
+            }
+            Console.WriteLine(str);
+        }
+
+        public static void ShortConcatination(int count)
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < count; i++)
+            {
+                sb.Append('+');
+            }
+            Console.WriteLine(sb.ToString());
         }
 
 
@@ -71,26 +138,31 @@ namespace ConsoleApp4
             return -1;
         }
 
-        private static long MeasurePerformance(int iterations, Action action)
+        private static double MeasurePerformance(int iterations, Action action)
         {
             // First action always too large, I woder why?
             action();
-            long result = 0;
+            double elapsedTicks = 0;
+            double elapsedMS = 0;
             var stopwatch = new Stopwatch();
+
             for (var i = 0; i < iterations; i++)
             {
                 stopwatch.Start();
                 action();
                 stopwatch.Stop();
-                result += stopwatch.ElapsedTicks;
-                Console.WriteLine($"Iteration {i+1}. Ticks: {stopwatch.ElapsedTicks}. ms: {stopwatch.ElapsedMilliseconds}");
+
+                elapsedTicks += stopwatch.ElapsedTicks;
+                elapsedMS += stopwatch.Elapsed.TotalMilliseconds;
+
+                Console.WriteLine($"Iteration {i+1}; Ticks: {stopwatch.ElapsedTicks}; ms: {stopwatch.Elapsed.TotalNanoseconds}.");
                 stopwatch.Reset();
             }
-            Console.WriteLine($"Iterations: {iterations}, TotalTiks: {result}");
-            Console.WriteLine($"AVG Ticks: {result/iterations}");
-            result /= iterations;
-            return result;
-            
+            Console.WriteLine($"Iterations: {iterations}; TotalTiks: {elapsedTicks}; TotalMilliseconds:{elapsedMS}.");
+            elapsedTicks /= iterations;
+            elapsedMS /= iterations;
+            Console.WriteLine($"AVG_Ticks: {elapsedTicks}; AVG_MS: {elapsedMS}.");
+            return elapsedTicks;
         }
 
 
