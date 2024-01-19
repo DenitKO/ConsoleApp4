@@ -9,7 +9,9 @@ namespace ConsoleApp4
     {
         static void Main(string[] args)
         {
-            FromMinSortDictionary();
+            ComparablePerson();
+
+            // FromMinSortDictionary();
 
             #region Start TestClass1Seminar1_1
             //TestClassSeminar1_1 testClass = new("Денис");
@@ -42,6 +44,31 @@ namespace ConsoleApp4
             //var text = MeasurePerformance(10, () => binarySearch(5, array));
         }
 
+        public static void ComparablePerson()
+        {
+            ComparablePerson[] persons = new ComparablePerson[10];
+
+            Random r = new Random();
+
+            for (int i = 0; i < persons.Length; i++)
+            {
+                persons[i] = new ComparablePerson(r.Next(1, 95), r.Next(30, 190), r.Next(20, 95));
+
+                Console.WriteLine($"age: {persons[i].age} height: {persons[i].height} weight: {persons[i].age}");
+            }
+
+            Array.Sort(persons);
+
+            Console.WriteLine(new string('-', 30));
+
+            for (int i = 0; i < persons.Length; i++)
+            {
+                Console.WriteLine($"age: {persons[i].age} height: {persons[i].height} weight: {persons[i].age}");
+            }
+
+            Console.ReadKey();
+        }
+
         public static void FromMinSortDictionary()
         {
             int[] nums = new int[10];
@@ -56,8 +83,10 @@ namespace ConsoleApp4
 
             foreach (int i in nums)
             {
-                if (!map.ContainsKey(i)) map[i] = 0;
-                map[i]++;
+                if (map.ContainsKey(i))
+                    map[i]++;
+                else
+                    map[i] = 0;
             }
 
             Dictionary<int, int> ordered = map.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
