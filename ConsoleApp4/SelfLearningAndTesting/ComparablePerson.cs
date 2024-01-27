@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp4
+namespace ConsoleApp4.SelfLearningAndTesting
 {
     internal class ComparablePerson : IComparable
     {
         public ComparablePerson() { }
-        public ComparablePerson(int age, double height, double weight) 
+        public ComparablePerson(int age, double height, double weight)
         {
             this.age = age;
             this.height = height;
@@ -26,22 +26,22 @@ namespace ConsoleApp4
 
             if (p != null)
             {
-                if (this.age > p.age) 
-                { 
-                    return -1; 
+                if (age > p.age)
+                {
+                    return -1;
                 }
-                else if (this.age < p.age)
-                { 
-                    return 1; 
+                else if (age < p.age)
+                {
+                    return 1;
                 }
-                else 
-                { 
-                    return 0; 
+                else
+                {
+                    return 0;
                 }
             }
-            else 
-            { 
-                throw new Exception("Параметр должен быть типа ComparablePerson"); 
+            else
+            {
+                throw new Exception("Параметр должен быть типа ComparablePerson");
             }
         }
     }

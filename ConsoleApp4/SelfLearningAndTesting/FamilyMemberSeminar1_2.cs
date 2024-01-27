@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp4
+namespace ConsoleApp4.SelfLearningAndTesting
 {
-    enum Gender {Male, Female}
+    enum Gender { Male, Female }
     internal class FamilyMemberSeminar1_2
     {
         public string name { get; set; }

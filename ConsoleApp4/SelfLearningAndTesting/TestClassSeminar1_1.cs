@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp4
+﻿namespace ConsoleApp4.SelfLearningAndTesting
 {
     internal class TestClassSeminar1_1
     {

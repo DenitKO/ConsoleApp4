@@ -2,6 +2,7 @@
 using System.Data;
 using System.Diagnostics;
 using System.Text;
+using ConsoleApp4.SelfLearningAndTesting;
 using ConsoleApp4.SelfLearningAndTesting.AbstractClass;
 
 namespace ConsoleApp4
@@ -11,7 +12,7 @@ namespace ConsoleApp4
         static void Main(string[] args)
         {
             #region CleanPolimorphism and AbstractClass
-            AbstractClassAndMethodExample();
+            // AbstractClassAndMethodExample();
             #endregion
 
             #region Date Type
@@ -50,16 +51,24 @@ namespace ConsoleApp4
             // var text1 = MeasurePerformance(1, () => ShortConcatination(10000));
             #endregion
 
+            #region SecondSeminarDZ and MeasurePerformance
             // SecondSeminarDZ();
             // var text = MeasurePerformance(10, () => SecondSeminarDZ());
+            #endregion
 
-            // Console.WriteLine(binarySearch(5, array));
+            #region Binary Search and Measure Performance
+            //var array = new int[] { 1, 3, 5, 10, 60, 100, 1000, 2000 };
 
+            //Console.WriteLine(binarySearch(5, array));
+            //Console.WriteLine();
+            //var text = MeasurePerformance(10, () => binarySearch(5, array));
+            #endregion
+
+            #region factorial and Measure Performance
             // Console.WriteLine(factorial(20));
             //var text = MeasurePerformance(10, () => factorial(20));
+            #endregion
 
-            //var array = new int[] { 1, 3, 5, 10, 60, 100, 1000, 2000 };
-            //var text = MeasurePerformance(10, () => binarySearch(5, array));
         }
 
         public static void AbstractClassAndMethodExample() 

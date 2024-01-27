@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace ConsoleApp4
+namespace ConsoleApp4.SelfLearningAndTesting
 {
     internal class DZ
     {
@@ -88,7 +88,7 @@ namespace ConsoleApp4
             {
                 for (int j = 0; j < a.GetLength(1); j++)
                 {
-                    result[i,j] = (int)temp[count];
+                    result[i, j] = (int)temp[count];
                     Console.Write(result[i, j]);
                     count++;
                 }

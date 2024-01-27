@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ConsoleApp4
+namespace ConsoleApp4.SelfLearningAndTesting
 {
     internal class ExponentiationTo234
     {
@@ -14,30 +14,30 @@ namespace ConsoleApp4
         // private readonly int number;
 
 
-        public ExponentiationTo234(int number) 
+        public ExponentiationTo234(int number)
         {
             this.number = number;
         }
 
 
-        public override string ToString() 
-        { 
+        public override string ToString()
+        {
             return number.ToString();
         }
 
         public decimal Exp2()
         {
-            return this.number*this.number;
+            return number * number;
         }
 
         public decimal Exp3()
         {
-            return this.number * this.number * this.number;
+            return number * number * number;
         }
 
         public decimal Exp4()
         {
-            return this.number * this.number * this.number * this.number;
+            return number * number * number * number;
         }
     }
 }
