@@ -1,15 +1,33 @@
 ﻿using System.Collections;
+using System.Data;
 using System.Diagnostics;
-using System.Reflection;
 using System.Text;
+using ConsoleApp4.SelfLearningAndTesting.AbstractClass;
 
 namespace ConsoleApp4
 {
-    class Programm
+    class Program
     {
         static void Main(string[] args)
         {
-            ComparablePerson();
+            #region CleanPolimorphism and AbstractClass
+            AbstractClassAndMethodExample();
+            #endregion
+
+            #region Date Type
+            //DateTime dateTime = DateTime.Now;
+            //DateTime myDate = DateTime.Parse("31-03-1990");
+            //Console.WriteLine(dateTime>myDate);
+            #endregion
+
+            #region NewClass - Exponentation to 2, 3, 4
+            //var num = 4;
+            //ExponentiationTo234 exp = new ExponentiationTo234(num);
+            //Console.WriteLine(exp);
+            //Console.WriteLine($"{exp} в 2 = {exp.Exp2()}\n{exp} в 3 = {exp.Exp3()}\n{exp} в 4 = {exp.Exp4()}");
+            #endregion
+
+            // ComparablePerson();
 
             // FromMinSortDictionary();
 
@@ -42,6 +60,21 @@ namespace ConsoleApp4
 
             //var array = new int[] { 1, 3, 5, 10, 60, 100, 1000, 2000 };
             //var text = MeasurePerformance(10, () => binarySearch(5, array));
+        }
+
+        public static void AbstractClassAndMethodExample() 
+        {
+            Player player = new Player();
+
+            Weapon[] weapons = [new Gun(), new LaserGun(), new Bow()];
+
+            foreach (Weapon item in weapons)
+            {
+                player.CheckInfo(item);
+                player.Fire(item);
+                Console.WriteLine();
+
+            }
         }
 
         public static void ComparablePerson()
@@ -142,7 +175,8 @@ namespace ConsoleApp4
             }
         }
 
-        private static int binarySearch(int value, int[] array) {
+        private static int binarySearch(int value, int[] array)
+        {
             int lowIndex = 0;
             int highIndex = array.Length - 1;
 
@@ -184,7 +218,7 @@ namespace ConsoleApp4
                 elapsedTicks += stopwatch.ElapsedTicks;
                 elapsedMS += stopwatch.Elapsed.TotalMilliseconds;
 
-                Console.WriteLine($"Iteration {i+1}; Ticks: {stopwatch.ElapsedTicks}; ms: {stopwatch.Elapsed.TotalNanoseconds}.");
+                Console.WriteLine($"Iteration {i + 1}; Ticks: {stopwatch.ElapsedTicks}; ms: {stopwatch.Elapsed.TotalNanoseconds}.");
                 stopwatch.Reset();
             }
             Console.WriteLine($"Iterations: {iterations}; TotalTiks: {elapsedTicks}; TotalMilliseconds:{elapsedMS}.");
@@ -204,5 +238,14 @@ namespace ConsoleApp4
 
             return value * factorial(value - 1);
         }
+    }
+
+    class A
+    {
+        public virtual void Foo() => Console.WriteLine("Class A");
+    }
+    class B : A
+    {
+        public override void Foo() => Console.WriteLine("Class B");
     }
 }
