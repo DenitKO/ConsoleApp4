@@ -3,7 +3,8 @@ using System.Data;
 using System.Diagnostics;
 using System.Text;
 using ConsoleApp4.SelfLearningAndTesting;
-using ConsoleApp4.SelfLearningAndTesting.AbstractClass;
+using ConsoleApp4.SelfLearningAndTesting.Inheritance;
+using ConsoleApp4.SelfLearningAndTesting.Polymorphism;
 
 namespace ConsoleApp4
 {
@@ -11,7 +12,11 @@ namespace ConsoleApp4
     {
         static void Main(string[] args)
         {
-            #region CleanPolimorphism and AbstractClass
+            TypeConvertsion();
+
+            // VirtualMethod();
+
+            #region Polymorphism (Virtual methods, AbstractClass)
             // AbstractClassAndMethodExample();
             #endregion
 
@@ -69,6 +74,71 @@ namespace ConsoleApp4
             //var text = MeasurePerformance(10, () => factorial(20));
             #endregion
 
+        }
+
+        public static void TypeConvertsion()
+        {
+            object obj = new MyPoint { X = 3, Y = 5 };
+            Console.WriteLine(obj.GetType());
+            Console.WriteLine();
+            /*
+             * obj.Print(); не работает, потому что сделан DownCast. И тип object ничего не знает о MyPoint
+             * MyPoint myPoint1 = (MyPoint)obj; // А так сработает.
+             * myPoint1.Print();
+             * Это UpCast. Мы выполнили явное приведение типов
+             * UpCast возможен только полсе DownCast-а
+             * но явнове приведение типа таким образом (SomeType)someVar
+             * вывалится в исключение InvalidCastExeption если будет передан не тот тип
+             * Поэтому придумали as, is
+             */
+
+            MyPoint myPoint1 = obj as MyPoint;
+            // оператор as присвоит левому операнду значение null
+            // если приведение типов не сработает
+            // иначе приведение типов сработает
+
+            Console.WriteLine("construction - obj as MyPoint");
+            Console.WriteLine("if (myPoint1 != null) {}");
+
+            if (myPoint1 != null)
+            {
+                myPoint1.Print();
+            }
+
+            // и РАНЬШЕ, где то до 7 версии смысла использовать следующую
+            // конструкция небыло
+
+            Console.WriteLine();
+            Console.WriteLine("construction - obj is MyPoint");
+
+            if (obj is MyPoint)
+            {
+                MyPoint myPoint2 = (MyPoint)obj;
+                myPoint2.Print();
+            }
+
+            // Но сейчас предпочтительней использовать is
+
+            Console.WriteLine();
+            Console.WriteLine("construction - obj is MyPoint point");
+
+            if (obj is MyPoint point)
+            {
+                point.Print();
+            }
+
+            //MyPoint obj2 = new MyPoint { Y = 3, X = 4 };
+            //Console.WriteLine(obj2.GetType());
+            //obj2.Print();
+        }
+
+        public static void VirtualMethod()
+        {
+            Person person = new Person();
+
+            person.Drive(new Car());
+            Console.WriteLine();
+            person.Drive(new SportCar());
         }
 
         public static void AbstractClassAndMethodExample() 

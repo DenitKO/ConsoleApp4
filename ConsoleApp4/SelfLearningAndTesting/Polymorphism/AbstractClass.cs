@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp4.SelfLearningAndTesting.AbstractClass
+﻿namespace ConsoleApp4
 {
     /*
         полиморфизм
