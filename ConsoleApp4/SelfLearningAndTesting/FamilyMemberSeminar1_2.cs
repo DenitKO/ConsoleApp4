@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp4.SelfLearningAndTesting
 {
-    enum Gender { Male, Female }
     internal class FamilyMemberSeminar1_2
     {
         public string name { get; set; }

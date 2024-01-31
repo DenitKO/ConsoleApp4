@@ -8,11 +8,22 @@ using ConsoleApp4.SelfLearningAndTesting.Polymorphism;
 
 namespace ConsoleApp4
 {
+
+    delegate int MyDelegat();
+    delegate void MyStringDelegat(string s);
     class Program
     {
         static void Main(string[] args)
         {
-            TypeConvertsion();
+
+
+            Lection5_1();
+
+            // Calculator();
+
+            // ExtendetCSharpLection1();
+
+            // TypeConvertsion();
 
             // VirtualMethod();
 
@@ -44,7 +55,7 @@ namespace ConsoleApp4
             //Console.WriteLine(testClass.GetReverseName());
             //Console.WriteLine(testClass2.GetReverseName());
             //Console.WriteLine(testClass3.GetReverseName());
-            //Console.WriteLine(testClass3.index);
+            //Console.WriteLine(testClass3._index);
             //testClass.Print("It's work!");
             //Console.WriteLine();
             //var text = MeasurePerformance(10, () => testClass.GetReverseName());
@@ -74,6 +85,88 @@ namespace ConsoleApp4
             //var text = MeasurePerformance(10, () => factorial(20));
             #endregion
 
+        }
+
+        static void Lection5_1()
+        {
+            MyDelegat? myDelegat = SayHello;
+            myDelegat += SayBye;
+            myDelegat += SayBye;
+            Console.WriteLine($"В делегате вот столько методов: {myDelegat.GetInvocationList().Length}");
+            Console.WriteLine();
+
+            foreach (MyDelegat item in myDelegat.GetInvocationList())
+            {
+                Console.WriteLine(item.GetType().Name);
+                
+                Console.WriteLine(item());
+            }
+
+            Console.WriteLine();
+
+            myDelegat();
+            Console.WriteLine();
+            Console.WriteLine(myDelegat());
+            Console.WriteLine("----------------------------");
+            MyStringDelegat myDelegat2 = MyName;
+            myDelegat2 -= MyName;
+            myDelegat2?.Invoke("Denis");
+            Console.WriteLine("----------------------------");
+
+
+            static int SayHello()
+            {
+                Console.WriteLine("Привет!");
+                return 0;
+            }
+
+            static int SayBye()
+            {
+                Console.WriteLine("Пока");
+                return 1;
+            }
+
+            static void MyName(string name)
+            {
+                Console.WriteLine($"my name is {name}");
+            }
+        }
+
+        public static void Calculator()
+        {
+            Calculator calculator = new Calculator();
+            calculator.Result += Calculator_Result;
+
+            calculator.Add(10);
+            calculator.Add(20);
+            calculator.Div(3);
+
+
+
+            static void Calculator_Result(object? sender, CalculatorArgs e)
+            {
+                Console.WriteLine($"result: {e.answer}");
+            }
+
+        }
+
+        public static void ExtendetCSharpLection1()
+        {
+            Human[] humans = { new Man(), new Woman(), new Man() };
+            foreach (var human in humans)
+            {
+                Woman w = human as Woman;
+                w?.MakeUp();
+
+                if (human is Woman woman)
+                {
+                    if (!woman.IsMakeup())
+                        woman.MakeUp();
+                    else woman.MakeDown();
+                }
+
+                human.Info();
+            }
         }
 
         public static void TypeConvertsion()
@@ -282,7 +375,7 @@ namespace ConsoleApp4
 
         private static double MeasurePerformance(int iterations, Action action)
         {
-            // First action always too large, I woder why?
+            // First myDelegat always too large, I woder why?
             action();
             double elapsedTicks = 0;
             double elapsedMS = 0;
