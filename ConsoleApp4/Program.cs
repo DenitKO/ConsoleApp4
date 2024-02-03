@@ -1,7 +1,9 @@
 ﻿using System.Collections;
 using System.Data;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using ConsoleApp4.SelfLearningAndTesting;
 using ConsoleApp4.SelfLearningAndTesting.Inheritance;
 using ConsoleApp4.SelfLearningAndTesting.Polymorphism;
@@ -15,9 +17,11 @@ namespace ConsoleApp4
     {
         static void Main(string[] args)
         {
+            UpCastDownCastSubstitution();
 
+            // Выведет «сумма элементов массива»
 
-            Lection5_1();
+            // Lection5_1();
 
             // Calculator();
 
@@ -85,6 +89,58 @@ namespace ConsoleApp4
             //var text = MeasurePerformance(10, () => factorial(20));
             #endregion
 
+        }
+        public static void UpCastDownCastSubstitution()
+        {
+            Console.WriteLine("1. A a = new A();");
+            Console.WriteLine("----------");
+            A a = new A();
+            a.Foo();
+            a.Print();
+            Console.WriteLine();
+
+            Console.WriteLine("2. B b = new B();");
+            Console.WriteLine("----------");
+            B b = new B();
+            b.Foo();
+            b.Print();
+            b.Print2();
+            Console.WriteLine();
+
+            Console.WriteLine("3. UpCast from B to A");
+            Console.WriteLine("A a2 = new B()");
+            Console.WriteLine("----------");
+            A a2 = new B();
+            a2.Foo();
+            a2.Print();
+            Console.WriteLine("Это называют 'замещение метода'");
+            Console.WriteLine("т.е. после обкаста вызывается реализация базового метода");
+            Console.WriteLine("кончено если он так же называется, и у него паблик модификатор");
+            Console.WriteLine();
+
+            Console.WriteLine("4. DownCast from B(A) to B");
+            Console.WriteLine("B b2 = a2 as B;");
+            Console.WriteLine("----------");
+            B b2 = a2 as B;
+            if (b2 != null)
+            {
+                b2.Foo();
+                b2.Print();
+                b2.Print2();
+            }
+            Console.WriteLine();
+
+            Console.WriteLine("5. UpCast from B to A");
+            Console.WriteLine("A a3 = b as A;");
+            Console.WriteLine("----------");
+            A a3 = b as A;
+            if (a3 != null)
+            {
+                a3.Foo();
+                a3.Print();
+            }
+            Console.WriteLine();
+            // B b2 = new A(); НЕЛЬЗЯ
         }
 
         static void Lection5_1()
@@ -185,13 +241,14 @@ namespace ConsoleApp4
              * Поэтому придумали as, is
              */
 
-            MyPoint myPoint1 = obj as MyPoint;
-            // оператор as присвоит левому операнду значение null
-            // если приведение типов не сработает
-            // иначе приведение типов сработает
+            
+            // если один объект не соответвует другому то оператор as выведет null
+
 
             Console.WriteLine("construction - obj as MyPoint");
             Console.WriteLine("if (myPoint1 != null) {}");
+
+            MyPoint myPoint1 = obj as MyPoint;
 
             if (myPoint1 != null)
             {
@@ -204,7 +261,7 @@ namespace ConsoleApp4
             Console.WriteLine();
             Console.WriteLine("construction - obj is MyPoint");
 
-            if (obj is MyPoint)
+            if (obj is MyPoint) // Если obj принадлежит классу MyPoint то true
             {
                 MyPoint myPoint2 = (MyPoint)obj;
                 myPoint2.Print();
@@ -215,7 +272,8 @@ namespace ConsoleApp4
             Console.WriteLine();
             Console.WriteLine("construction - obj is MyPoint point");
 
-            if (obj is MyPoint point)
+
+            if (obj is MyPoint point) 
             {
                 point.Print();
             }
@@ -234,20 +292,21 @@ namespace ConsoleApp4
             person.Drive(new SportCar());
         }
 
+
         public static void AbstractClassAndMethodExample() 
         {
             Player player = new Player();
 
             Weapon[] weapons = [new Gun(), new LaserGun(), new Bow()];
 
-            foreach (Weapon item in weapons)
+            foreach (var item in weapons)
             {
                 player.CheckInfo(item);
                 player.Fire(item);
                 Console.WriteLine();
-
             }
         }
+
 
         public static void ComparablePerson()
         {
@@ -273,6 +332,7 @@ namespace ConsoleApp4
 
             Console.ReadKey();
         }
+
 
         public static void FromMinSortDictionary()
         {
@@ -302,6 +362,7 @@ namespace ConsoleApp4
             }
         }
 
+
         public static void LongConcatination(int count)
         {
             string str = string.Empty;
@@ -312,6 +373,7 @@ namespace ConsoleApp4
             Console.WriteLine(str);
         }
 
+
         public static void ShortConcatination(int count)
         {
             StringBuilder sb = new StringBuilder();
@@ -321,7 +383,6 @@ namespace ConsoleApp4
             }
             Console.WriteLine(sb.ToString());
         }
-
 
 
         public static void SecondSeminarDZ()
@@ -346,6 +407,7 @@ namespace ConsoleApp4
                 Console.WriteLine();
             }
         }
+
 
         private static int binarySearch(int value, int[] array)
         {
@@ -372,6 +434,7 @@ namespace ConsoleApp4
 
             return -1;
         }
+
 
         private static double MeasurePerformance(int iterations, Action action)
         {
@@ -414,10 +477,14 @@ namespace ConsoleApp4
 
     class A
     {
-        public virtual void Foo() => Console.WriteLine("Class A");
+        public virtual void Foo() => Console.WriteLine("Type: " + this.GetType().Name + ". A virtual Foo()");
+        public void Print() => Console.WriteLine("Type: " + this.GetType().Name + ". A.Print()");
     }
     class B : A
     {
-        public override void Foo() => Console.WriteLine("Class B");
+        public override void Foo() => Console.WriteLine("Type: " + this.GetType().Name + ". B override Foo()");
+        public new void Print() => Console.WriteLine("Type: " + this.GetType().Name + ". B new Print()");
+
+        public void Print2() => Console.WriteLine("Type: " + this.GetType().Name + ". B Print2()");
     }
 }
